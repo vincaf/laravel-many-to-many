@@ -8,6 +8,7 @@
         </div>
     @enderror
 </div>
+
 <div class="mb-3">
     <label for="input-post_content" class="form-label">Content</label>
     <textarea class="form-control" id="input-post_content" cols="30" rows='5' name="post_content" required>{{ old('post_content', $post->post_content) }}</textarea>
@@ -17,6 +18,30 @@
         </div>
     @enderror
 </div>
+
+<div class="mb-3">
+    <label for="input-tags" class="form-label">Tags</label>
+    @foreach ($tags as $tag)
+        <div class="form-check form-switch">
+            <input type="checkbox" 
+                name="tags[]" 
+                id="input-tags" 
+                class="form-check-input" 
+                value="{{ $tag->id }}" 
+                {{ $post->tags->contains($tag) ? 'checked' : '' }}>
+
+            <label for="input-tags" class="form-check-label">
+                {{ $tag->name }}
+            </label>
+        </div>
+    @endforeach
+    @error('tags')
+        <div class="alert alert-danger">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
 <div class="mb-3">
     <label for="input-post_image" class="form-label">Image</label>
     <input type="text" class="form-control" id="input-post_image" name="post_image"
@@ -27,6 +52,7 @@
         </div>
     @enderror
 </div>
+
 <div class="text-center mt-5">
     <button type="submit" class="btn btn-primary btn-lg">UPDATE AND SAVE</button>
 </div>
