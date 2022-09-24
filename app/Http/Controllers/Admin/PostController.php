@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\Tag;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,8 @@ class PostController extends Controller
     public function create()
     {
         $post = new Post();
-        return view('admin.posts.create', compact('post'));
+        $tags = Tag::all();
+        return view('admin.posts.create', ['post' => $post, 'tags' => $tags]);
     }
 
     /**
@@ -56,7 +58,9 @@ class PostController extends Controller
         $lastPostId = Post::orderBy('id', 'desc')->first();
         $sentData['slug'] = Str::slug($sentData['title'], '-'). '-' . ($lastPostId->id + 1);
 
-        $post->create($sentData);
+        $post->fill($sentData);
+        $post->save($sentData);
+        $post->tags()->sync($sentData['tags']);
 
         return redirect()->route('admin.posts.show', $sentData['slug'])->with('created', $sentData['title']);
     }
@@ -81,7 +85,8 @@ class PostController extends Controller
     public function edit($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
-        return view('admin.posts.edit', compact('post'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', ['post' => $post, 'tags' => $tags]);
     }
 
     /**
@@ -96,6 +101,7 @@ class PostController extends Controller
         $post = Post::where('slug', $slug)->firstOrFail();
         $sentData['slug'] = Str::slug($sentData['title'], '-'). '-' . ($post->id);
         $post->update($sentData);
+        $post->tags()->sync($sentData['tags']);
 
         return redirect()->route('admin.posts.show', $post->slug)->with('edited', $sentData['title']); 
     }
