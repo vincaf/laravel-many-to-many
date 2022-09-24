@@ -32,6 +32,20 @@
                                     @endforelse
                                 </strong>
                             </em></p>
+                            <div class="subtitle">
+                                <p>
+                                    Tags:
+                                    <span class="badge badge-pill">
+                                        @if (isset($post->tags))
+                                            @foreach ($post->tags as $tag )
+                                                {{ $tag->name }} -
+                                            @endforeach
+                                        @else
+                                            No tag selected for this post
+                                        @endif
+                                    </span>
+                                </p>
+                            </div>
                             <p>{{ $post->post_content }}</p>
                             <p><strong>Post Date:</strong> {{ $post->post_date }}</p>
                             <div class="mt-5 d-flex">
