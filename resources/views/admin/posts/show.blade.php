@@ -21,7 +21,17 @@
                     <div class="col-md-8">
                         <div class="card-body">
                             <h3 class="mb-2"><strong>{{ $post->title }}</strong></h3>
-                            <p><strong>Author:</strong> {{ $post->user->name }}</p>
+                            <p>Author: <strong>{{ $post->user->name }}</strong> - User-ID: {{ $post->user->id }}</p>
+                            <p><em>
+                                {{ $post->user->name }} has the roles of:
+                                <strong>
+                                    @forelse ($post->user->roles as $role)
+                                        {{ $role->name }}
+                                    @empty
+                                        no roles.
+                                    @endforelse
+                                </strong>
+                            </em></p>
                             <p>{{ $post->post_content }}</p>
                             <p><strong>Post Date:</strong> {{ $post->post_date }}</p>
                             <div class="mt-5 d-flex">
