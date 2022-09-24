@@ -19,9 +19,9 @@ class TagsTableSeeder extends Seeder
             '#films',
             '#hollywood',
             '#serieA',
-            'netflix',
-            'primevideo',
-            'dazn',
+            '#netflix',
+            '#primevideo',
+            '#dazn',
         ];
 
         foreach ($tags as $tag){
