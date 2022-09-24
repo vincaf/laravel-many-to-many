@@ -18,10 +18,15 @@ class RoleUserTableSeeder extends Seeder
         $users = User::all();
 
         foreach ($users as $user) {
-            $randomRoles = $faker->randomElements($roles, 2, false);
 
-            foreach ($randomRoles as $randomRole) {
-                $user->roles()->attach($randomRole->id);
+            if ($user->id === 1) {
+                $user->roles()->attach([1]);
+            } else {
+                $randomRoles = $faker->randomElements($roles, 2, false);
+
+                foreach ($randomRoles as $randomRole) {
+                    $user->roles()->attach($randomRole->id);
+                }
             }
         }
     }
