@@ -8,6 +8,7 @@ use App\Models\Tag;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -57,6 +58,7 @@ class PostController extends Controller
         $post = new Post();
         $lastPostId = Post::orderBy('id', 'desc')->first();
         $sentData['slug'] = Str::slug($sentData['title'], '-'). '-' . ($lastPostId->id + 1);
+        $sentData['post_image'] = Storage::put('uploads', $sentData['post_image']);
 
         $post->fill($sentData);
         $post->save($sentData);
