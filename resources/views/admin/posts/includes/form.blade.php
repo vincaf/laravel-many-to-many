@@ -44,7 +44,7 @@
 
 <div class="mb-3">
     <label for="input-post_image" class="form-label">Image</label>
-    <input type="text" class="form-control" id="input-post_image" name="post_image"
+    <input type="file" class="form-control" id="input-post_image" name="post_image"
         value="{{ old('post_image', $post->post_image) }}" required>
     @error('post_image')
         <div class="alert alert-danger">
