@@ -16,7 +16,13 @@
             <div class="card my-3" style="max-width: 850px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="{{ $post->post_image }}" alt="{{ $post->post_title }}" class="img-fluid rounded-start" />
+                        @if (filter_var($post->post_image, FILTER_VALIDATE_URL))
+                            <img src="{{ $post->post_image }}" alt="{{ $post->post_title }}" class="img-fluid rounded-start" />
+                            {{-- url --}}
+                        @else
+                            <img src="{{ asset('storage/' . $post->post_image) }}" alt="{{ $post->post_title }}" class="img-fluid rounded-start" />
+                            {{-- file --}}
+                        @endif
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
